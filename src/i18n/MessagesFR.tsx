@@ -1,4 +1,20 @@
 export const MessagesFR = {
+  and: "et",
+  login: {
+    login: "Connexion",
+    loginBTN: "Se connecter",
+    email: "E-mail",
+    password: "Mot de passe",
+    errors: {
+      userNotFound: "Utilisateur non trouvé",
+      noPassword: "Aucun mot de passe n'a été fourni",
+      noEmail: "Aucune adresse mail n'a été fournie",
+      invalidEmail: "L'adresse mail fournie est invalide",
+      internalError:
+        "Une erreur interne est survenue. Veuillez contacter l'administrateur de l'application.",
+    },
+    success: "Bienvenue {userName}",
+  },
   menu: {
     open: "Ouvrir",
     profile: "Profile",

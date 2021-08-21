@@ -9,6 +9,8 @@ import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 import { Divider, Grid, makeStyles } from "@material-ui/core";
 import { ReactComponent as OpenMenuSVG } from "../Icons/leftMenu_menu.svg";
+import { useUser } from "src/Contexts/UserContext";
+import { isNil } from "lodash";
 
 const useStyles = makeStyles({
   root: {
@@ -33,6 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ component: Component, showMenu }) => {
   const location = useLocation();
   const classes = useStyles();
   const { formatMessage } = useIntl();
+  const { user } = useUser();
   return (
     <React.Fragment>
       <Grid style={{ display: "flex", flexDirection: "row" }}>
@@ -69,7 +72,7 @@ const Layout: React.FC<LayoutProps> = ({ component: Component, showMenu }) => {
                 >
                   <Badge color="secondary">
                     {/* variant="dot" */}
-                    <OpenMenuSVG style={{ fill: "#607D8B" }} />
+                    <OpenMenuSVG fill="#AEAEAE" />
                   </Badge>
                 </ListItem>
               </Tooltip>
@@ -79,23 +82,20 @@ const Layout: React.FC<LayoutProps> = ({ component: Component, showMenu }) => {
 
               {navRoutes.map(({ divider, space, ...route }) => {
                 let SvgComponent = route.svgicon as any;
-                const svgFill =
-                  location.pathname.includes(route.to as string) ||
-                  (location.pathname === "/" && route.to === `/dashboard`)
-                    ? "#ff0000"
-                    : "#607D8B";
+                const svgFill = "#AEAEAE";
                 return (
                   <Tooltip
                     key={route.to}
                     title={formatMessage({ id: route.labelId })}
                     placement="right"
-                    style={{ maxHeight: 120 }}
+                    //style={{ maxHeight: 120 }}
                     arrow
                     classes={{ arrow: classes.arrow }}
                   >
                     <ListItem
+                      disabled={isNil(user) && route.to !== "/profile"}
                       component={Link as React.ComponentType<any>}
-                      style={{ marginTop: "80%", maxHeight: 120 }}
+                      //style={{ marginTop: "80%" /*, maxHeight: 120*/ }}
                       to={route.to}
                       button
                       classes={{ root: classes.root, button: classes.root }}
@@ -103,15 +103,11 @@ const Layout: React.FC<LayoutProps> = ({ component: Component, showMenu }) => {
                       <Badge
                         color="error"
                         variant={
-                          location.pathname === route.to ||
-                          (location.pathname === "/" &&
-                            route.labelId === "menu.home")
-                            ? "dot"
-                            : "standard"
+                          location.pathname === route.to ? "dot" : "standard"
                         }
                       >
                         {/* variant="dot" */}
-                        <SvgComponent style={{ fill: svgFill }} />
+                        <SvgComponent fill={svgFill} />
                       </Badge>
                     </ListItem>
                   </Tooltip>
@@ -150,7 +146,7 @@ const AuthenticatedRoute: React.FC<AuthenticatedRouteProps> = ({
             <Layout component={component} showMenu={showMenu} />
           </div>
         ) : (
-          <Redirect to={`/`} />
+          <Redirect to={`/profile`} />
         )
       }
     />

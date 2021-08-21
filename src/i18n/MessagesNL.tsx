@@ -1,4 +1,20 @@
 export const MessagesNL = {
+  and: "en",
+  login: {
+    login: "inloggen",
+    loginBTN: "Log in",
+    email: "E-mail",
+    password: "password",
+    errors: {
+      userNotFound: "Gebruiker niet gevonden",
+      noPassword: "Er is geen wachtwoord verstrekt",
+      noEmail: "Er is geen e-mail adres opgegeven",
+      invalidEmail: "Het opgegeven e-mail adres is ongeldig",
+      internalError:
+        "Er is een interne fout opgetreden. Neem contact op met de applicatiebeheerder.",
+    },
+    success: "Welkome {userName}",
+  },
   menu: {
     open: "Open",
     profile: "Profile",

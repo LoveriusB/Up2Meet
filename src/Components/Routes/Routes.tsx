@@ -1,12 +1,15 @@
 import { isNil } from "lodash";
 import React from "react";
 import { Switch } from "react-router-dom";
-import Dashboard from "../Dashboard/Dashboard";
 import { ReactComponent as HomeSVG } from "../Icons/leftMenu_home.svg";
 import { ReactComponent as ProfileSVG } from "../Icons/leftMenu_profil.svg";
 import { ReactComponent as CalendarSVG } from "../Icons/leftMenu_calendar.svg";
 import { ReactComponent as NoteBookSVG } from "../Icons/leftMenu_notebook.svg";
 import AuthenticatedRoute from "./AuthenticatedRoute";
+
+import Profile from "../Profile/Profile";
+import Dashboard from "../Dashboard/Dashboard";
+import { useUser } from "src/Contexts/UserContext";
 
 export interface NavItem {
   to?: string;
@@ -19,6 +22,7 @@ export interface NavItem {
   divider?: boolean;
   menu?: boolean;
   showLeftMenu?: boolean;
+  forceAuthenticated?: boolean;
 }
 
 enum RouteDestination {
@@ -33,8 +37,9 @@ export const navRoutes: NavItem[] = [
     to: RouteDestination.PROFILE,
     exact: true,
     svgicon: ProfileSVG,
-    component: Dashboard,
+    component: Profile,
     labelId: "menu.profile",
+    forceAuthenticated: true,
   },
   {
     to: RouteDestination.HOME,
@@ -61,7 +66,8 @@ export const navRoutes: NavItem[] = [
 ];
 
 const Routes: React.FC = () => {
-  //const isAuthenticated = Boolean(user && user.getUsername());
+  const { user } = useUser();
+  const isAuthenticated = Boolean(user);
   const authRoutes = navRoutes.map(({ divider, space, ...route }) => {
     let RouteComponent = route.component;
     const to = route.to;
@@ -76,7 +82,7 @@ const Routes: React.FC = () => {
           key={route.to}
           component={RouteComponent}
           showMenu={showMenu}
-          isAuthenticated={true}
+          isAuthenticated={route.forceAuthenticated ? true : isAuthenticated}
         />
       );
     } else {
@@ -89,7 +95,7 @@ const Routes: React.FC = () => {
         path={"/"}
         component={Dashboard}
         showMenu={true}
-        isAuthenticated={true}
+        isAuthenticated={isAuthenticated}
         exact
       />
 
@@ -99,7 +105,7 @@ const Routes: React.FC = () => {
       <AuthenticatedRoute
         component={() => <h1>NOT FOUND</h1>}
         showMenu={false}
-        isAuthenticated={true}
+        isAuthenticated={isAuthenticated}
       />
     </Switch>
   );

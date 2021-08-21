@@ -4,13 +4,13 @@ import {
   Divider,
   Grid,
   makeStyles,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 import { MeetingState, PaymentState } from "src/Utils/api";
 import CustomSelect from "../UI/CustomSelect";
+import CustomTextField from "../UI/CustomTextField";
 
 interface UpdateMeetingDialogProps {
   dialogOpen: boolean;
@@ -72,19 +72,12 @@ const UpdateMeetingDialog: React.FC<UpdateMeetingDialogProps> = ({
       </Grid>
       <Grid container style={{ marginTop: "2%" }}>
         <Grid item xs={6} style={{ paddingLeft: "5%" }}>
-          <TextField
-            className={localClasses.textField}
-            disabled
-            InputProps={{ disableUnderline: true }}
-            value={clientName}
-          />
+          <CustomTextField name="Bruno" disabled value={clientName} />
         </Grid>
         <Grid item xs={6}>
-          <TextField
-            className={localClasses.textField}
+          <CustomTextField
+            name="test" //User.name
             disabled
-            InputProps={{ disableUnderline: true }}
-            value={"Loverius"} //User.name
           />
         </Grid>
       </Grid>
@@ -95,8 +88,8 @@ const UpdateMeetingDialog: React.FC<UpdateMeetingDialogProps> = ({
       </Typography>
       <Grid style={{ paddingLeft: "5%" }}>
         <CustomSelect>
-          {Object.keys(MeetingState).map((state) => (
-            <Typography className={localClasses.typo}>
+          {Object.keys(MeetingState).map((state, index) => (
+            <Typography key={index} className={localClasses.typo}>
               {formatMessage({
                 id: `dashBoardCards.mainCard.meetingStatus.${state}`,
               })}
@@ -111,8 +104,8 @@ const UpdateMeetingDialog: React.FC<UpdateMeetingDialogProps> = ({
       </Typography>
       <Grid style={{ paddingLeft: "5%" }}>
         <CustomSelect>
-          {Object.keys(PaymentState).map((state) => (
-            <Typography className={localClasses.typo}>
+          {Object.keys(PaymentState).map((state, index) => (
+            <Typography key={index} className={localClasses.typo}>
               {formatMessage({
                 id: `dashBoardCards.mainCard.paymentStatus.${state}`,
               })}

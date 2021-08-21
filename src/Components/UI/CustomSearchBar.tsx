@@ -47,10 +47,14 @@ const useLocalStyles = makeStyles({
 });
 
 interface CustomSearchBarProps {
+  showInput?: boolean;
   barStyles?: React.CSSProperties;
 }
 
-const CustomSearchBar: React.FC<CustomSearchBarProps> = ({ barStyles }) => {
+const CustomSearchBar: React.FC<CustomSearchBarProps> = ({
+  barStyles,
+  showInput = true,
+}) => {
   const localClasses = useLocalStyles();
   const { formatMessage } = useIntl();
 
@@ -59,26 +63,28 @@ const CustomSearchBar: React.FC<CustomSearchBarProps> = ({ barStyles }) => {
       <Grid item xs={4} style={{ paddingLeft: "5%" }}>
         <LanguageSelector />
       </Grid>
-      <Grid item xs={8}>
-        <Grid className={localClasses.container}>
-          <Grid className={localClasses.customInputAndIcon}>
-            <FormControl style={{ width: "100%" }}>
-              <Input
-                id="input-with-icon-adornment"
-                disableUnderline
-                className={localClasses.customInput}
-                style={{ width: "100%" }}
-                placeholder={formatMessage({ id: "appBar.searchHere" })}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon style={{ marginRight: "5%" }} />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
+      {showInput && (
+        <Grid item xs={8}>
+          <Grid className={localClasses.container}>
+            <Grid className={localClasses.customInputAndIcon}>
+              <FormControl style={{ width: "100%" }}>
+                <Input
+                  id="input-with-icon-adornment"
+                  disableUnderline
+                  className={localClasses.customInput}
+                  style={{ width: "100%" }}
+                  placeholder={formatMessage({ id: "appBar.searchHere" })}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <SearchIcon style={{ marginRight: "5%" }} />
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </Grid>
   );
 };

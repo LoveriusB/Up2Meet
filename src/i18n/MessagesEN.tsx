@@ -1,4 +1,20 @@
 export const MessagesEN = {
+  and: "and",
+  login: {
+    login: "Login",
+    loginBTN: "Log in",
+    email: "E-mail",
+    password: "Password",
+    errors: {
+      userNotFound: "User not found",
+      noPassword: "No password has been provided",
+      noEmail: "No E-mail has been provided",
+      invalidEmail: "The provided E-mail is not valid",
+      internalError:
+        "An internal error has occured. Please contact web administrator.",
+    },
+    success: "Welcome {userName}",
+  },
   menu: {
     open: "Open",
     profile: "Profile",

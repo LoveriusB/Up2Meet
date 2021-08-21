@@ -274,8 +274,9 @@ const Dashboard = () => {
           <Divider
             style={{ margin: "1% 0%", width: "95%", marginLeft: "2.5%" }}
           />
-          {dailiMeetings.map((meeting) => (
+          {dailiMeetings.map((meeting, index) => (
             <DailyMeeting
+              key={index}
               name={meeting.name}
               price={meeting.price}
               futureMeeting={meeting.futureMeeting}

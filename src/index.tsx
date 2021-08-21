@@ -5,6 +5,7 @@ import App from "./App";
 import CustomThemeProvider from "./Contexts/CustomThemeProvider";
 import { LocaleProvider } from "./Contexts/IntlProviderWrapper";
 import WebFont from "webfontloader";
+import { UserProvider } from "./Contexts/UserContext";
 
 WebFont.load({
   google: {
@@ -16,12 +17,14 @@ WebFont.load({
 });
 
 ReactDOM.render(
-  <BrowserRouter>
-    <CustomThemeProvider>
-      <LocaleProvider>
-        <App />
-      </LocaleProvider>
-    </CustomThemeProvider>
-  </BrowserRouter>,
+  <UserProvider>
+    <BrowserRouter>
+      <CustomThemeProvider>
+        <LocaleProvider>
+          <App />
+        </LocaleProvider>
+      </CustomThemeProvider>
+    </BrowserRouter>
+  </UserProvider>,
   document.getElementById("root")
 );
